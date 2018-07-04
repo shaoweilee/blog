@@ -1,0 +1,1 @@
+http://bubkoo.com/2014/04/21/http-cookies-explained/
