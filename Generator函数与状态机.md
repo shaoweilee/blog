@@ -13,9 +13,9 @@
 ```
 
 ```javascript
-const button = document.querySelector('.like-btn')
-const buttonText = button.querySelector('.like-text')
-let isLiked = false
+const button = document.querySelector('.like-btn');
+const buttonText = button.querySelector('.like-text');
+let isLiked = false;
 button.addEventListener('click', () => {
     isLiked = !isLiked
     if (isLiked) {
@@ -23,7 +23,7 @@ button.addEventListener('click', () => {
     } else {
       buttonText.innerHTML = '点赞'
     }
-}, false)
+}, false);
 ```
 
 突然想到阮一峰对于Generator函数的阐述：http://es6.ruanyifeng.com/#docs/generator#%E5%90%AB%E4%B9%89 
