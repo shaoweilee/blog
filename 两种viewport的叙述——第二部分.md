@@ -8,6 +8,8 @@
 
 这篇文章主要讲手机浏览器，如果你是个纯小白，我建议你先读[第一部分](https://github.com/shaoweilee/blog/blob/master/%E4%B8%A4%E7%A7%8Dviewport%E7%9A%84%E5%8F%99%E8%BF%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86.md)，是关于桌面浏览器的，先了解下这个家庭嘛。
 
+**（译者注，在看这两篇文章时，请自动把CSS像素，脑补成设备独立像素，对理解很多很多概念都有好处。）**
+
 ## 手机浏览器的问题
 
 当我们比较手机浏览器和桌面浏览器的时候，最明显的不同就是屏幕尺寸。手机浏览器显示的网页内容显著地少于桌面浏览器；可以缩小页面直到文字都看不清，或者显示网页的一小部分来适应屏幕大小，以使我们能够看得清。
@@ -90,7 +92,7 @@ document.documentElement.clientWidth和document.documentElement.clientHeight包�
 
 ## 屏幕
 
-在桌面浏览器上，screen.width和screen.height是以设备像素为单位的屏幕宽高，作为一个前端开发者，你基本上用不到这个属性，不用关心屏幕的物理大小，只关心多少CSS像素能够适配就行了。
+在桌面浏览器上，screen.width和screen.height是以**设备像素**（译者注：其实是设备独立像素，只不过在桌面浏览器上，设备像素和设备独立像素是相等的数值。）为单位的屏幕宽高，作为一个前端开发者，你基本上用不到这个属性，不用关心屏幕的物理大小，只关心多少CSS像素能够适配就行了。
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_screen.jpg) 
 
@@ -164,7 +166,7 @@ document.documentElement.clientWidth和document.documentElement.clientHeight包�
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mq_yes.jpg) 
 
-你可以把布局视口的尺寸设为任何值，包括`device-width`，它会参照screen.width（按设备像素）重设布局视口的大小。
+你可以把布局视口的尺寸设为任何值，包括`device-width`，它会参照screen.width（按设备独立像素）重设布局视口的大小。
 
 但还是有个陷阱，有时候screen.width不怎么有用，因为像素太高了。比如，Nexus One宽度是480px，但是谷歌工程师决定：当使用device-width导致太宽的时候，就把布局视口的宽度设为480px。他们把它缩短到2/3，device-width就给你个320px的宽度，跟iPhone一样。（感觉没翻译清楚。。。）
 
