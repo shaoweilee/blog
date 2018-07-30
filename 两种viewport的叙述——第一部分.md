@@ -2,7 +2,7 @@
 
 [TOC]
 
-[原文链接](https://www.quirksmode.org/mobile/viewports.html)
+**[原文链接](https://www.quirksmode.org/mobile/viewports.html)**
 
 在这个小系列中，我会阐述视口和几种重要元素的宽度，像\<html>元素，window，screen。
 
@@ -215,4 +215,4 @@ div.sidebar {
 
 ## 结论
 
-就这样，结束了对桌面浏览器行为的探索。本系列的第二部分将这些概念移植到移动设备上，并突出与桌面浏览器的重要区别。
+就这样，结束了对桌面浏览器行为的探索。本系列的[第二部分](https://github.com/shaoweilee/blog/blob/master/%E4%B8%A4%E7%A7%8Dviewport%E7%9A%84%E5%8F%99%E8%BF%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86.md)将这些概念移植到移动设备上，并突出与桌面浏览器的重要区别。

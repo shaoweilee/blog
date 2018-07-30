@@ -2,11 +2,11 @@
 
 [TOC]
 
-**原文链接https://www.quirksmode.org/mobile/viewports2.html**
+[**原文链接**](https://www.quirksmode.org/mobile/viewports2.html)
 
 在这个小系列中，我会阐释几种重要元素的宽度（像html，window，screen），还有viewports是怎么工作的。
 
-这篇文章主要讲手机浏览器，如果你是个纯小白，我建议你先读[第一部分](https://www.quirksmode.org/mobile/viewports.html)，是关于桌面浏览器的，先了解下这个家庭嘛。
+这篇文章主要讲手机浏览器，如果你是个纯小白，我建议你先读[第一部分](https://github.com/shaoweilee/blog/blob/master/%E4%B8%A4%E7%A7%8Dviewport%E7%9A%84%E5%8F%99%E8%BF%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86.md)，是关于桌面浏览器的，先了解下这个家庭嘛。
 
 ## 手机浏览器的问题
 
