@@ -255,7 +255,7 @@ module.exports = {
 }
 ```
 
-默认生成的文件名是index.html，自动引入了生成的js文件。
+默认生成的文件名是index.html，自动引入了生成的js文件。请注意，如果用了这个插件，在不指定模板的情况下，就算没有index.html文件，也是可以的，它会自己创建index.html文件。
 
 ### 使用CleanWebpackPlugin清理dist文件夹
 
@@ -718,3 +718,166 @@ Chunkhash,hash,contenthash;
 vender分离
 
 babel
+
+
+
+
+
+2018年7月27日，更新一下自用webpack配置：
+
+```javascript
+//webpack.common.js
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+  entry: {
+    index: './src/index.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        },
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin({
+      title: '口袋豆瓣'
+    }),
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
+        }
+      }
+    }
+  }
+};
+```
+
+```javascript
+//webpack.development.js
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+const webpack = require('webpack');
+
+module.exports = merge(common, {
+  devtool: 'eval-source-map',
+  mode: 'development',
+  output: {
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
+    path: __dirname + '/dist'
+  },
+  devServer: {
+    contentBase: './dist',
+    hot: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]  
+  },
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+  ]
+});
+```
+
+```javascript
+//webpack.production.js
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = merge(common, {
+  devtool: 'source-map',
+  mode: 'production',
+  output: {
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].bundle.js',
+    path: __dirname + '/dist'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: ['style-loader'],
+          use: ['css-loader']
+        })
+      }
+    ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new ExtractTextPlugin({
+      filename: 'style.[chunkhash].css'
+    })
+  ],
+});
+```
+
+```javascript
+//package.json
+{
+  "name": "douban",
+  "version": "1.0.0",
+  "description": "P7 口袋豆瓣",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --open --config webpack.development.js",
+    "build": "webpack --config webpack.production.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.imweb.io/qq610382941/douban.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^4.3.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.12.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.3"
+  }
+}
+
+```
+
+## 十一、使用sass-loader
+
+安装：
+
+```bash
+npm install sass-loader node-sass webpack --save-dev
+```
+
+快速使用：
+
