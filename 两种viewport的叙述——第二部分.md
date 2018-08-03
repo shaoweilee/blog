@@ -8,8 +8,6 @@
 
 这篇文章主要讲手机浏览器，如果你是个纯小白，我建议你先读[第一部分](https://github.com/shaoweilee/blog/blob/master/%E4%B8%A4%E7%A7%8Dviewport%E7%9A%84%E5%8F%99%E8%BF%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86.md)，是关于桌面浏览器的，先了解下这个家庭嘛。
 
-**（译者注，在看这两篇文章时，请自动把CSS像素，脑补成设备独立像素，对理解很多很多概念都有好处。）**
-
 ## 手机浏览器的问题
 
 当我们比较手机浏览器和桌面浏览器的时候，最明显的不同就是屏幕尺寸。手机浏览器显示的网页内容显著地少于桌面浏览器；可以缩小页面直到文字都看不清，或者显示网页的一小部分来适应屏幕大小，以使我们能够看得清。
@@ -24,14 +22,14 @@
 
 ## 两种视口（viewports）
 
-手机视口（屏幕）太窄了！跟CSS布局不大对付，最明显的解决方式是让手机视口变得宽，非常宽，像电脑那么宽！这么一来，就必须分出两种视口：visual viewport和layout viewport。（视觉视口和布局视口）
+手机视口（屏幕）太窄了！跟CSS布局不大对付，最明显的解决方式是让手机视口变得宽，非常宽，像电脑那么宽！这么一来，就必须分出两种视口：visual viewport和layout viewport。（可见视口和布局视口）
 
 这篇文章的作者也引用了一段话来解释这两种视口：
 
-> “想象一下，布局视口（layout viewport）是一幅不会改变形状和尺寸的大大的画，现在你有一个小框框，你能通过这个框来看这幅画，小框周围被不透明的材料给糊住了，遮挡了你的视线，也遮挡了大部分的画，有点坐井观天的意思。你能通过小框框看到的那一小部分画，就是视觉视口（visual viewport），当你拿着这个小框框离着画远了点，就能一下子看到全部的画了（缩小）；当你离着画近了点，卧槽能看到的又少了（放大）。你也可以旋转小框框，但是整幅画的大小形状永远不变。”——译者注：框框不是视觉视口，那一小部分画才是，这意味着，视觉视口大小是可以缩放的。
+> “想象一下，布局视口（layout viewport）是一幅不会改变形状和尺寸的大大的画，现在你有一个小框框，你能通过这个框来看这幅画，小框周围被不透明的材料给糊住了，遮挡了你的视线，也遮挡了大部分的画，有点坐井观天的意思。你能通过小框框看到的那一小部分画，就是可见视口（visual viewport），当你拿着这个小框框离着画远了点，就能一下子看到全部的画了（缩小）；当你离着画近了点，卧槽能看到的又少了（放大）。你也可以旋转小框框，但是整幅画的大小形状永远不变。”——译者注：框框不是可见视口，那一小部分画才是，这意味着，可见视口大小是可以缩放的。
 >
 
-视觉视口就是显示在手机屏幕上的那部分网页，用户可以通过滚动，来决定能看到哪部分网页；或者直接缩放视觉视口的大小。
+可见视口就是显示在手机屏幕上的那部分网页，用户可以通过滚动，来决定能看到哪部分网页；或者直接缩放可见视口的大小。
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_visualviewport.jpg) 
 
@@ -48,13 +46,13 @@
 
 ### 缩放
 
-这两种视口显然都是以CSS像素测量的。但是，我们可以缩放视觉视口呀，视觉视口的大小是会变的（如果放大视觉视口，屏幕上的CSS像素数变了。举栗子，去海滩看沙子，一粒沙子就是一个CSS像素，低头一看视野中好多沙子，但是把一撮沙子放在显微镜下看……你懂得，我也没看过。但是在这个过程中，沙子本身的大小是没有变化的），而布局视口面积保持不变（CSS像素总数不变）。
+这两种视口显然都是以CSS像素测量的。但是，我们可以缩放可见视口呀，可见视口的大小是会变的（如果放大可见视口，屏幕上的CSS像素数变了。举栗子，去海滩看沙子，一粒沙子就是一个CSS像素，低头一看视野中好多沙子，但是把一撮沙子放在显微镜下看……你懂得，我也没看过。但是在这个过程中，沙子本身的大小是没有变化的），而布局视口面积保持不变（CSS像素总数不变）。
 
 ### 理解布局视口（layout viewport）
 
 为了理解布局视口，我们必须看看，当页面缩放到最小时，发生了什么。许多手机浏览器初始都是以最小的缩放级别来显示网页的。
 
-重点在于：浏览器已经确定了布局视口的大小，因此在最小缩放级别下，布局视口能够完全覆盖屏幕（这么一来，布局视口就和视觉视口一样大了。译者以为，根本原因是两个视口中的CSS像素数一样了。）
+重点在于：浏览器已经确定了布局视口的大小，因此在最小缩放级别下，布局视口能够完全覆盖屏幕（这么一来，布局视口就和可见视口一样大了。译者以为，根本原因是两个视口中的CSS像素数一样了。）
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_viewportzoomedout.jpg) 
 
@@ -62,7 +60,7 @@
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_layoutviewport.jpg) 
 
-布局视口的宽度保持不变。如果你旋转手机，变化的是视觉视口，浏览器会自动地稍稍放大，以适应新的方向，这样一来，布局视口又和视觉视口一样宽了（布局视口=视觉视口，仅在最小缩放级别下成立。还是拿看画举栗子，当走得足够远从长方形的框里看画，框框完全把画包裹在内，但是框框旋转90度之后，画的宽度是不足以塞满整个框框的，必须再走近一点，也就是稍稍放大，画的宽度才能塞满整个框框）。
+布局视口的宽度保持不变。如果你旋转手机，变化的是可见视口，浏览器会自动地稍稍放大，以适应新的方向，这样一来，布局视口又和可见视口一样宽了（布局视口=可见视口，仅在最小缩放级别下成立。还是拿看画举栗子，当走得足够远从长方形的框里看画，框框完全把画包裹在内，但是框框旋转90度之后，画的宽度是不足以塞满整个框框的，必须再走近一点，也就是稍稍放大，画的宽度才能塞满整个框框）。
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_viewportzoomedout_la.jpg) 
 
@@ -82,17 +80,19 @@ document.documentElement.clientWidth和document.documentElement.clientHeight包�
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_client_la.jpg) 
 
-## 测量视觉视口
+## 测量可见视口
 
-对视觉视口来说，可以通过window.innerWidth和window.innerHeight测量。显然地，当页面缩放时，测量结果也会变化，因为屏幕中的CSS像素数变了。
+对可见视口来说，可以通过window.innerWidth和window.innerHeight测量。显然地，当页面缩放时，测量结果也会变化，因为屏幕中的CSS像素数变了。
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_inner.jpg) 
 
-不幸的是，上述属性对儿有兼容性问题；许多浏览器还是需要提供对视觉视口测量的支持。目前，还没有浏览器把视觉视口测量值存储为任何属性对儿，所以我想（作者想）window.innerWidth和window.innerHeight就应该是规范，尽管支持度不大好。
+不幸的是，上述属性对儿有兼容性问题；许多浏览器还是需要提供对可见视口测量的支持。目前，还没有浏览器把可见视口测量值存储为任何属性对儿，所以我想（作者想）window.innerWidth和window.innerHeight就应该是规范，尽管支持度不大好。
 
 ## 屏幕
 
-在桌面浏览器上，screen.width和screen.height是以**设备像素**（译者注：其实是设备独立像素，只不过在桌面浏览器上，设备像素和设备独立像素是相等的数值。）为单位的屏幕宽高，作为一个前端开发者，你基本上用不到这个属性，不用关心屏幕的物理大小，只关心多少CSS像素能够适配就行了。
+和桌面浏览器一样，screen.width和screen.height是以**设备像素**为单位，给出了屏幕的尺寸，作为一个前端开发者，你基本上用不到这个属性，不用关心屏幕的物理大小，只关心多少CSS像素能够适配就行了。
+
+（译者注：这句话现在看是有BUG的，不知道是不是时代的原因：假设如PPK所说，screen.wdith以设备像素为单位，且与物理像素无关，那它只能指代以“点”计的设备独立像素，事实上现在它的返回值就是设备独立像素数。而当我们设置meta-viewport标签后，这个数值就是适配屏幕的CSS像素数。）
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_screen.jpg) 
 
@@ -104,7 +104,7 @@ document.documentElement.clientWidth和document.documentElement.clientHeight包�
 
 ## 滚动偏移
 
-你还需要知道的是，视觉视口相对于布局视口的位置，也就是滚动偏移，在桌面浏览器上，它就是window.pageXOffset和window.pageYOffset。
+你还需要知道的是，可见视口相对于布局视口的位置，也就是滚动偏移，在桌面浏览器上，它就是window.pageXOffset和window.pageYOffset。
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_page.jpg) 
 
@@ -138,7 +138,7 @@ document.documentElement.clientWidth和document.documentElement.clientHeight包�
 
 ![img](https://www.quirksmode.org/mobile/pix/viewport/mobile_pageXY.jpg) 
 
-`e.clientX/e.clientY`与视觉视口有关，以CSS像素为单位。这很有意义，虽然我不知道具体的好处是啥……
+`e.clientX/e.clientY`与可见视口有关，以CSS像素为单位。这很有意义，虽然我不知道具体的好处是啥……
 
 `e.screenX/e.screenY`与屏幕有关，以设备像素为单位。当然了，它的参考坐标和clientX/clientY相同，并且设备像素没啥用。所以我们不用关心screenX/screenY，没啥用。
 
@@ -168,7 +168,7 @@ document.documentElement.clientWidth和document.documentElement.clientHeight包�
 
 你可以把布局视口的尺寸设为任何值，包括`device-width`，它会参照screen.width（按设备独立像素）重设布局视口的大小。
 
-但还是有个陷阱，有时候screen.width不怎么有用，因为像素太高了。比如，Nexus One宽度是480px，但是谷歌工程师决定：当使用device-width导致太宽的时候，就把布局视口的宽度设为480px。他们把它缩短到2/3，device-width就给你个320px的宽度，跟iPhone一样。（感觉没翻译清楚。。。）
+但还是有个陷阱，有时候screen.width不怎么有用，因为像素太高了。比如，Nexus One宽度是480px，但是谷歌工程师决定：当使用device-width导致太宽的时候，就在480px的宽度上作出点让步，他们把它缩短到2/3，device-width就给你个320px的宽度，跟iPhone一样。
 
 传闻，新的iPhone会秀出高像素（不可避免地，等同于大屏幕了），如果苹果采用和谷歌一样的做法，我也不会吃鲸。也许，最终device-width会仅仅代表着320px。
 
