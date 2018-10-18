@@ -120,6 +120,10 @@ props传入一个子组件内部，该子组件是不能对传入的props进行�
 3. `componentWillUpdate()`：组件开始重新渲染之前调用。
 4. `componentDidUpdate()`：组件重新渲染并且把更改变更到真实的 DOM 以后调用。
 
+![1533715460503](React小书笔记.assets/1533715460503.png)
+
+![1533715556512](React小书笔记.assets/1533715556512.png)
+
 ## ref
 
 获取ref:
