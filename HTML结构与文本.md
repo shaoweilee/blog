@@ -23,7 +23,6 @@
 <header>表示一组引导性的帮助，包含标题元素，logo，分节头部，搜索表单等。
 
 <h1>至<h6>标题元素能够简要描述该节主题。标题信息可以由用户代理使用，例如自动构造文档中的内容表。
-
 <hgroup>代表一个段的标题。。。说实话，真的看不懂。
 
 <nav>导航栏，一个含有多个超链接的区域。
@@ -280,12 +279,10 @@ HTML5通过body，section，article，aside，nav来**显式定义章节**，章
      <p>Forest elephants do not live in trees but among them.
        ...this subsection continues...
    </section>
-
+   
    1. Forest elephants
       1.1 Habitat (implicitly defined by the h3 element)
    ```
-
-   ​
 
 2. 如果与前面标题的级别相同，那么就闭合前面的章节（有可能闭合一个显式定义的章节！），然后开始一个新的同一级别的隐式章节；
 
