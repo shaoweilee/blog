@@ -2,7 +2,7 @@
 
 ## 一、let与const
 
-### let
+### let块死全提重
 
 **声明的变量只在块级作用域里有效**，有以下几个特别需要注意的：
 
@@ -23,7 +23,7 @@ for (let i = 0; i < 3; i++) //父级作用域
 
 ```JavaScript
 for (let i = 0; i < 3; i++) {
-  console.log(i);//Reference Error: i is not defiend
+  console.log(i);//Reference Error: can't access lexical declaration `i' before initialization
   let i = 'abc';//我们会有i的，外面的滚粗！
   console.log(i);
 }
@@ -153,7 +153,7 @@ const命令其实是保证的保存变量的内存地址不变，因此：
 
 ## 二、变量的解构赋值
 
-ES6允许按照一定模式，将右边的数据赋给左边的变量。左边的模式决定是哪种解构赋值。`[]`是数组的，会调用等号右侧的数据结构的遍历器接口，`{}`是对象的，不需要遍历器接口，只找同名属性。但是使用了扩展运算符`...`的对象解构赋值，需要浏览器支持ES2018，目前（2018年06月20日）babel也不支持转译。
+ES6允许按照一定模式，将右边的数据赋给左边的变量。左边的模式决定是哪种解构赋值。**`[]`是数组的，会调用等号右侧的数据结构的遍历器接口，`{}`是对象的，不需要遍历器接口，只找同名属性。**但是使用了扩展运算符`...`的对象解构赋值，需要浏览器支持ES2018，目前（2018年06月20日）babel也不支持转译。
 
 ```javascript
 let [a, b, c] = [1, 2, 3];
@@ -283,7 +283,7 @@ last // 3
 字符串也可以解构赋值。因为字符串被转化成了类数组的对象！
 
 ```JavaScript
-const [a, b, c, d, e] = 'hello';
+const [a, b, c, d, e] = 'hello';//左边是[]，因此用的是右边的遍历器接口
 a // "h"
 b // "e"
 c // "l"
@@ -527,7 +527,7 @@ add(2, 5, 3) // 10
 
 ### 严格模式
 
-ES6规定，只要函数使用了默认参数、解构赋值、扩展运算符，就无法在函数内部显示指定严格模式。
+ES6规定，只要函数使用了默认参数、解构赋值、扩展运算符，就无法在函数内部显式地指定严格模式。
 
 原因是，虽然是在函数内部指定了严格模式，但是严格模式同时作用于函数参数与函数体。这样就有一个不合理的地方，因为函数执行的时候才知道函数要不要用严格模式执行，但是参数应该优先于函数体执行。
 
@@ -615,7 +615,7 @@ fullName( {first: lee, last: shaowei} );
 
 很重要！
 
-1. 箭头函数不提供this绑定，使用this时依照作用域链规则寻找。
+1. 箭头函数不提供this绑定，使用this时依照作用域链规则寻找。同时bind，apply，call不生效
 2. 不可以当作构造函数，也就是说，不可以使用`new`命令，否则会抛出一个错误。因为没有this绑定。
 3. 不可以使用`arguments`对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
 4. 不可以使用`yield`命令，因此箭头函数不能用作 Generator 函数。
@@ -635,12 +635,7 @@ var arr = [...document.querySelectorAll('div')];//arr is Array，我认为其实
 var arr = new Array(...document.querySelectorAll('div'));
 ```
 
-- 可以将没有对应形参的实参转为数组
 
-```JavaScript
-function f(x, ...rest){console.log(rest)}
-f(1, 2, 3);
-```
 
 扩展运算符的后面还可以是表达式，只要表达式返回的结果是数组就行：
 
@@ -885,7 +880,7 @@ Array.prototype.copyWithin(target, start = 0, end = this.length)
 
 
 
-## 七、对象的扩展
+## 七、对象的扩展---简表枚遍
 
 ### 属性和方法的简洁表示
 
@@ -893,19 +888,35 @@ Array.prototype.copyWithin(target, start = 0, end = this.length)
 
 ### 方法的name属性
 
-### Object.is()
-
 ### Object.assign()
 
 注意：浅拷贝可枚举属性；同名属性替换；把数组视为对象；
 
 常见用途：为对象或this添加属性而不是用`=`，为对象或构造函数的原型添加方法而不是`=`；
 
+### Object.is()
+
+与===基本一致，但是+0不等于-0，NaN等于自身
+
 ### 属性的可枚举性 和 属性遍历
+
+五种遍历的方法：
+
+for...in；自继枚，不含symbol
+
+Object.keys(obj)；自枚，不含symbol
+
+Object.getOwnPropertyNames(obj)；自所，不含symbol
+
+Object.getOwnPropertySymbols(obj)；自symbol
+
+Reflect.ownKeys(obj)；
 
 ### Object.getOwnPropertyDescriptors()
 
-### \_\_proto\_\_ Object.getPrototypeOf() Object.setPrototypeOf() Object.create() 
+### \_\_proto\_\_ 
+
+最好不要使用\__proto__，而是用Object.getPrototypeOf() Object.setPrototypeOf() Object.create() 
 
 ### super关键字
 
@@ -928,7 +939,7 @@ Symbol({obj: 1});//Symbol([object Object])
 Symbol(undefined);//Symbol()
 ```
 
-symbol值可以显示转为字符串，隐式转为布尔值，不能转为其他值。
+symbol值可以显式转为字符串，隐式转为布尔值，不能转为其他值。
 
 ### 作为属性名的Symbol
 
@@ -956,6 +967,8 @@ Symbol('foo') === Symbol.for('foo') //false
 
 ## 九、Set和Map
 
+
+
 ### Set
 
 Set结构类似数组，但成员都是唯一的，没有重复值。内部使用的查重算法类似===，但认为NaN等于NaN。
@@ -982,6 +995,8 @@ Set()函数接受一个数组，或者有iterable接口的其他数据作为参�
 - `values()`：返回键值的遍历器
 - `entries()`：返回键值对的遍历器
 - `forEach()`：使用回调函数遍历每个成员
+
+set的遍历顺序就是插入顺序。
 
 `keys`方法、`values`方法、`entries`方法返回的都是遍历器对象（Iterator）。由于Set对象没有键名，只有键值，或者说键名键值是同一个值，因此keys方法和values方法完全一致。注意Set结构不可用数字下标或字符串下标取值。
 
@@ -1198,13 +1213,21 @@ var promise = new Promise(function(resolve, reject){//这个函数被称为execu
 
 promise状态发生改变时，触发then的调用。then方法的参数是两个回调函数：`onfullfilled`，`onrejected`。
 
+**then的两个回调函数在本轮事件循环的末尾执行。**
+
+**注意与`setTimeout(fn, 0)`的不同，`setTimeout(fn, 0)`在下一轮“事件循环”开始时执行。**
+
 注意使用箭头函数使得流程清晰。
 
 ### catch
 
 catch()用于捕捉promise运行过程中发生的错误，虽然then的第二个函数参数也是发生错误时的回调函数，但是更推荐用catch，使得then的第二个参数不必要了。
 
+最好的方法是每一个then后面都跟一个catch方法，及时捕获错误。
+
 catch的返回值仍然是一个promise对象，如果catch的函数参数抛出错误或者返回一个本身失败的promise，那么catch返回的promise状态就是rejected，否则就是fullfilled。
+
+**根据阮一峰的描述，promise的错误捕获体现出了“冒泡性”，会一直向后传递， 直到被捕获为止：一方面，catch会捕获前面then产生的错误；另一方面，Promise.all()中的参数promise对象如果产生了错误，会被它自身的catch方法捕获，捕获之后这个promise对象的状态变为resolved，all()能够按预期执行，否则错误会冒泡到外部，被all()返回的promise对象的catch捕获，不会调用then指定的回调函数。**
 
 ### finally
 
@@ -1214,6 +1237,8 @@ catch的返回值仍然是一个promise对象，如果catch的函数参数抛出
 
 - 只有`p1`、`p2`、`p3`的状态都变成`fulfilled`，`p`的状态才会**异步**变成`fulfilled`，此时`p1`、`p2`、`p3`的resolve返回值组成一个数组，传递给`p`的回调函数。
 - 只要`p1`、`p2`、`p3`之中有一个被`rejected`，`p`的状态就**异步**变成`rejected`，此时第一个被`reject`的实例的返回值，会传递给`p`的回调函数。
+
+注意，如果作为参数的 Promise 实例，自己定义了`catch`方法，那么它一旦被`rejected`，并不会触发`Promise.all()`的`catch`方法。
 
 返回的promise实例仍然会等所有同步任务完成之后改变状态，在那之前还是`pending`。
 
@@ -1401,9 +1426,9 @@ var [a, b, name] = obj;
 ### 调用Iterator接口的场合
 
 - 数组和set、map的解构赋值；
-- 扩展运算符`...`展开或转数组；
+- 扩展运算符`...`展开；
 - yield；
-- 接受数组为参数的场合
+- 数组的遍历会调用遍历器接口，所以……接受数组为参数的场合
   - for...of
   - Array.from()
   - Map(), Set(), WeakMap(), WeakSet()（比如`new Map([['a',1],['b',2]])`）
@@ -1436,7 +1461,20 @@ for(var x of arr.entries()){
 }
 ```
 
-`for…of`只会遍历具有数字索引的属性，这一点秒杀`for…in`。
+`for…of`只会遍历具有数字索引的属性，这一点秒杀`for…in`：
+
+```javascript
+let arr = [3, 5, 7];
+arr.foo = 'hello';
+
+for (let i in arr) {
+  console.log(i); // "0", "1", "2", "foo"
+}
+
+for (let i of arr) {
+  console.log(i); //  "3", "5", "7"
+}
+```
 
 #### set与map
 
@@ -1711,6 +1749,8 @@ Promise对象
 
 
 ### generator管理异步
+
+generator函数能封装异步操作的根本原因，是它能暂停执行和恢复执行。
 
 使用generator函数管理异步操作最大的问题就是：什么时候调用next()？也就是说怎么知道上一个异步任务完成了？
 
